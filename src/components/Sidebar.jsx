@@ -1,14 +1,22 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar = ({ activePage, setActivePage, isSidebarOpen }) => {
   const navigate = useNavigate();
+  const location = useLocation(); // Dapatkan URL saat ini
 
   const menuItems = [
-    { label: "Dashboard", icon: "📊", page: "dashboard" },
+    { label: "Dashboard", icon: "📊", page: "" },
     { label: "ToDo", icon: "✅", page: "todo" },
     { label: "Logs", icon: "📜", page: "Log" },
   ];
+
+  // Update activePage berdasarkan URL yang sedang dibuka
+  useEffect(() => {
+    const currentPath =
+      location.pathname === "/" ? "" : location.pathname.slice(1);
+    setActivePage(currentPath);
+  }, [location.pathname, setActivePage]);
 
   return (
     <div
