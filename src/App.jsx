@@ -40,7 +40,7 @@ function App() {
         {/* <Route path="/" element={<LoginForm />} /> */}
 
         <Route
-          path="/dashboard"
+          path="/"
           element={
             <MainLayout>
               {(isSidebarOpen) => (
