@@ -8,7 +8,7 @@ const localizer = momentLocalizer(moment);
 
 const Dashboard = ({ isSidebarOpen, setTodoList }) => {
   const navigate = useNavigate();
-  
+
   const [events, setEvents] = useState([
     {
       title: "Design Conference",
@@ -21,24 +21,31 @@ const Dashboard = ({ isSidebarOpen, setTodoList }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleAccept = () => {
-    setTodoList((prev) => [...prev, { name: "Judul Pelayanan", deadline: "6 Januari" }]);
-    navigate("/todo"); 
+    setTodoList((prev) => [
+      ...prev,
+      { name: "Judul Pelayanan", deadline: "6 Januari" },
+    ]);
+    navigate("/todo");
   };
 
   return (
     <div
-      className={`transition-all duration-300 p-6 mt-20 grid grid-cols-3 gap-6 ${
-        isSidebarOpen ? "ml-64" : "ml-20"
+      className={`transition-all duration-300 p-6 mt-20 grid gap-6 ${
+        isSidebarOpen ? "ml-64 grid-cols-3" : "ml-20 grid-cols-1"
       }`}
     >
       {/* Calendar Section */}
-      <div className="col-span-2 bg-white p-6 rounded-md shadow-md">
+      <div
+        className={`col-span-2 bg-white p-6 rounded-md shadow-md ${
+          isSidebarOpen ? "h-[500px]" : "h-[300px]"
+        }`}
+      >
         <Calendar
           localizer={localizer}
           events={events}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 500 }}
+          style={{ height: "100%" }} // Make calendar take full height of the container
           views={["month", "week", "day"]}
           className="custom-calendar"
         />
