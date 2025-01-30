@@ -3,18 +3,16 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar = ({ activePage, setActivePage, isSidebarOpen }) => {
   const navigate = useNavigate();
-  const location = useLocation(); // Dapatkan URL saat ini
+  const location = useLocation();
 
   const menuItems = [
     { label: "Dashboard", icon: "📊", page: "" },
     { label: "ToDo", icon: "✅", page: "todo" },
-    { label: "Logs", icon: "📜", page: "Log" },
+    { label: "Logs", icon: "📜", page: "log" },
   ];
 
-  // Update activePage berdasarkan URL yang sedang dibuka
   useEffect(() => {
-    const currentPath =
-      location.pathname === "/" ? "" : location.pathname.slice(1);
+    const currentPath = location.pathname === "/" ? "" : location.pathname.slice(1);
     setActivePage(currentPath);
   }, [location.pathname, setActivePage]);
 
@@ -22,7 +20,7 @@ const Sidebar = ({ activePage, setActivePage, isSidebarOpen }) => {
     <div
       className={`${
         isSidebarOpen ? "w-64" : "w-20"
-      } bg-white h-screen fixed top-0 left-0 flex flex-col transition-all duration-300 shadow-md`}
+      } bg-white h-screen fixed top-0 left-0 flex flex-col transition-all duration-300 shadow-md z-50`}
     >
       <div className="flex items-center justify-center p-4">
         {isSidebarOpen && <img src="/logo.png" alt="Logo" className="w-12" />}
