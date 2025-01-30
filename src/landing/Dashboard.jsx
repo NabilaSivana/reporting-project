@@ -25,21 +25,17 @@ const Dashboard = ({ isSidebarOpen, setTodoList }) => {
       ...prev,
       { name: "Judul Pelayanan", deadline: "6 Januari" },
     ]);
-    navigate("/todo");
+    navigate("/todo"); // Navigate to the ToDo page after pressing Accept
   };
 
   return (
     <div
       className={`transition-all duration-300 p-6 mt-20 grid gap-6 ${
-        isSidebarOpen ? "ml-64 grid-cols-3" : "ml-20 grid-cols-1"
+        isSidebarOpen ? "ml-64 grid-cols-3" : "ml-20 grid-cols-3"
       }`}
     >
       {/* Calendar Section */}
-      <div
-        className={`col-span-2 bg-white p-6 rounded-md shadow-md ${
-          isSidebarOpen ? "h-[500px]" : "h-[300px]"
-        }`}
-      >
+      <div className="col-span-2 bg-white p-6 rounded-md shadow-md h-[500px]">
         <Calendar
           localizer={localizer}
           events={events}
@@ -52,7 +48,7 @@ const Dashboard = ({ isSidebarOpen, setTodoList }) => {
       </div>
 
       {/* Report Section */}
-      <div className="bg-white p-6 rounded-md shadow-md">
+      <div className="bg-white p-6 rounded-md shadow-md h-[500px]">
         <h2 className="font-semibold text-lg mb-4">Report</h2>
         <div
           className="border p-3 rounded-md w-full cursor-pointer flex justify-between items-center"
