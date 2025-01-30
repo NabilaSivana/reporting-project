@@ -3,12 +3,11 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 const Header = ({ isSidebarOpen, toggleSidebar }) => {
   return (
     <header
-      className={`bg-white shadow-md p-6 flex justify-between items-center fixed top-0 left-0 right-0 z-50 ${
+      className={`bg-white shadow-md p-6 flex justify-between items-center fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isSidebarOpen ? "ml-64" : "ml-20"
-      } transition-all duration-300`}
+      }`}
     >
       <div className="flex items-center space-x-4">
-        {/* Hamburger Menu */}
         <button
           onClick={toggleSidebar}
           className="text-purple-600 focus:outline-none"
