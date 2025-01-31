@@ -12,7 +12,8 @@ const Sidebar = ({ activePage, setActivePage, isSidebarOpen }) => {
   ];
 
   useEffect(() => {
-    const currentPath = location.pathname === "/" ? "" : location.pathname.slice(1);
+    const currentPath =
+      location.pathname === "/" ? "" : location.pathname.slice(1);
     setActivePage(currentPath);
   }, [location.pathname, setActivePage]);
 
