@@ -31,7 +31,7 @@ const Dashboard = ({ isSidebarOpen, setTodoList }) => {
   return (
     <div
       className={`transition-all duration-300 p-6 mt-20 grid gap-6 ${
-        isSidebarOpen ? "ml-64 grid-cols-3" : "ml-20 grid-cols-3"
+        isSidebarOpen ? "ml-5 grid-cols-3" : "ml-5 grid-cols-3"
       }`}
     >
       {/* Calendar Section */}
