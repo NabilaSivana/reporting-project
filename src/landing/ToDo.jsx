@@ -7,7 +7,7 @@ const Todo = ({ isSidebarOpen, todoList }) => {
   return (
     <div
       className={`transition-all duration-300 p-6 mt-20 ${
-        isSidebarOpen ? "ml-64" : "ml-20"
+        isSidebarOpen ? "ml-5" : "ml-5"
       } max-w-full`}
     >
       <h2 className="font-semibold text-lg mb-4">ToDo List</h2>
