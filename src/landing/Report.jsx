@@ -14,6 +14,12 @@ const Report = ({ isSidebarOpen }) => {
   const sigCanvas = useRef(null);
   const [signature, setSignature] = useState(null);
   const [file, setFile] = useState(null);
+  const categories = [
+    "Pendaftaran",
+    "Konsultasi",
+    "Pembayaran",
+    "Layanan Medis",
+  ];
 
   const borderRadius = isSidebarOpen ? "rounded-sm" : "rounded-lg";
   const separatorWidth = isSidebarOpen ? "w-20" : "w-40";
@@ -51,7 +57,16 @@ const Report = ({ isSidebarOpen }) => {
   };
 
   const saveSignature = () => {
-    setSignature( sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
+    setSignature(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
+  };
+  const addTask = () => {
+    setTasks([...tasks, ""]);
+  };
+
+  const handleTaskChange = (index, value) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index] = value;
+    setTasks(updatedTasks);
   };
 
   const handleFileChange = (event) => {
@@ -188,14 +203,24 @@ const Report = ({ isSidebarOpen }) => {
               />
             </div>
             <div className="space-y-6">
-              {["Masalah", "Kategori Permasalahan"].map((label, index) => (
+              {["Masalah", "Kategori Pelayanan"].map((label, index) => (
                 <div key={index} className="space-y-2">
                   <label className="block text-sm font-semibold">{label}</label>
-                  <input
-                    type="text"
-                    placeholder="Type here"
-                    className="w-full p-3 border bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  />
+                  {label === "Kategori Pelayanan" ? (
+                    <select className="w-full p-3 border bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                      {categories.map((category, index) => (
+                        <option key={index} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      placeholder="Type here"
+                      className="w-full p-3 border bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  )}
                 </div>
               ))}
               <div className="flex justify-between mt-6">
@@ -277,7 +302,7 @@ const Report = ({ isSidebarOpen }) => {
               <div className="space-y-2">
                 <label className="block text-sm font-semibold">Reminder</label>
                 <select className="w-full p-3 border bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
-                  <option value="">P ilih Reminder</option>
+                  <option value="">Pilih Reminder</option>
                   <option value="1 Jam Sebelumnya">1 Jam Sebelumnya</option>
                   <option value="1 Hari Sebelumnya">1 Hari Sebelumnya</option>
                 </select>
@@ -329,48 +354,49 @@ const Report = ({ isSidebarOpen }) => {
                   />
                 </div>
 
-                <div className="mt-6 space-y-4">
-                  <label className="block text-sm font-semibold">
-                    Pertanyaan
-                  </label>
-                  {tasks.map((task, index) => (
-                    <div key={index} className="flex items-center space-x-4">
-                      <input
-                        type="checkbox"
-                        checked={selectedTasks.includes(index)}
-                        onChange={() => handleCheckboxChange(index)}
-                        className="w-5 h-5 accent-purple-500"
-                      />
-                      <span className="text-lg">{task}</span>
-
-                      {selectedTasks.includes(index) && (
-                        <div className="flex space-x-2">
-                          <button
-                            className={`px-4 py-2 rounded-lg font-semibold transition ${
-                              taskAnswers[task] === "yes"
-                                ? "bg-purple-500 text-white"
-                                : "bg-gray-300 text-gray-700"
-                            }`}
-                            onClick={() => handleTaskAnswer(task, "yes")}
-                          >
-                            Yes
-                          </button>
-                          <button
-                            className={`px-4 py-2 rounded-lg font-semibold transition ${
-                              taskAnswers[task] === "no"
-                                ? "bg-purple-500 text-white"
-                                : "bg-gray-300 text-gray-700"
-                            }`}
-                            onClick={() => handleTaskAnswer(task, "no")}
-                          >
-                            No
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
+        <div className="mb-4">
+        <label className="block text-gray-700">Tugas yang Diberikan:</label>
+        {tasks.map((task, index) => (
+          <div key={index} className="flex items-center space-x-4">
+            <input
+              type="checkbox"
+              checked={selectedTasks.includes(index)}
+              onChange={() => handleCheckboxChange(index)}
+              className="w-5 h-5 accent-purple-500"
+            />
+            <input
+              type="text"
+              value={task}
+              onChange={(e) => handleTaskChange(index, e.target.value)}
+              className="mt-1 block w-full border border-gray-300 rounded p-2"
+              placeholder={`Tugas ${index + 1}`}
+            />
+            {selectedTasks.includes(index) && (
+              <div className="flex space-x-2">
+                <button
+                  className={`px-4 py-2 rounded-lg font-semibold transition ${taskAnswers[task] === "yes" ? "bg-purple-500 text-white" : "bg-gray-300 text-gray-700"}`}
+                  onClick={() => handleTaskAnswer(task, "yes")}
+                >
+                  Yes
+                </button>
+                <button
+                  className={`px-4 py-2 rounded-lg font-semibold transition ${taskAnswers[task] === "no" ? "bg-purple-500 text-white" : "bg-gray-300 text-gray-700"}`}
+                  onClick={() => handleTaskAnswer(task, "no")}
+                >
+                  No
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+        <button
+          onClick={addTask}
+          className="mt-2 bg-purple-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          + Tambah Tugas
+        </button>
+      </div>
+    </div>
                 <div className="space-y-4">
                   <label className="block text-sm font-semibold">
                     Tanda Tangan
@@ -415,7 +441,7 @@ const Report = ({ isSidebarOpen }) => {
                   />
                   {file && (
                     <img
-                      src={ file}
+                      src={file}
                       alt="Uploaded Signature"
                       className="mt-2 w-40 border"
                     />
@@ -438,7 +464,6 @@ const Report = ({ isSidebarOpen }) => {
                 </div>
               </div>
             </div>
-          </div>
         );
 
       case "Preview":
