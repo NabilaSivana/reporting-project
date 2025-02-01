@@ -59,6 +59,7 @@ const Report = ({ isSidebarOpen }) => {
   const saveSignature = () => {
     setSignature(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
   };
+
   const addTask = () => {
     setTasks([...tasks, ""]);
   };
@@ -181,7 +182,7 @@ const Report = ({ isSidebarOpen }) => {
                 </div>
                 <div className={`h-px bg-purple-500 ${separatorWidth}`}></div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-purple -500 rounded-full"></div>
+                  <div className="w-4 h-4 bg-purple-500 rounded-full"></div>
                   <span className="text-sm font-medium text-purple-700">
                     Detail Permasalahan
                   </span>
@@ -354,49 +355,60 @@ const Report = ({ isSidebarOpen }) => {
                   />
                 </div>
 
-        <div className="mb-4">
-        <label className="block text-gray-700">Tugas yang Diberikan:</label>
-        {tasks.map((task, index) => (
-          <div key={index} className="flex items-center space-x-4">
-            <input
-              type="checkbox"
-              checked={selectedTasks.includes(index)}
-              onChange={() => handleCheckboxChange(index)}
-              className="w-5 h-5 accent-purple-500"
-            />
-            <input
-              type="text"
-              value={task}
-              onChange={(e) => handleTaskChange(index, e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded p-2"
-              placeholder={`Tugas ${index + 1}`}
-            />
-            {selectedTasks.includes(index) && (
-              <div className="flex space-x-2">
-                <button
-                  className={`px-4 py-2 rounded-lg font-semibold transition ${taskAnswers[task] === "yes" ? "bg-purple-500 text-white" : "bg-gray-300 text-gray-700"}`}
-                  onClick={() => handleTaskAnswer(task, "yes")}
-                >
-                  Yes
-                </button>
-                <button
-                  className={`px-4 py-2 rounded-lg font-semibold transition ${taskAnswers[task] === "no" ? "bg-purple-500 text-white" : "bg-gray-300 text-gray-700"}`}
-                  onClick={() => handleTaskAnswer(task, "no")}
-                >
-                  No
-                </button>
-              </div>
-            )}
-          </div>
-        ))}
-        <button
-          onClick={addTask}
-          className="mt-2 bg-purple-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          + Tambah Tugas
-        </button>
-      </div>
-    </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700">
+                    Tugas yang Diberikan:
+                  </label>
+                  {tasks.map((task, index) => (
+                    <div key={index} className="flex items-center space-x-4">
+                      <input
+                        type="checkbox"
+                        checked={selectedTasks.includes(index)}
+                        onChange={() => handleCheckboxChange(index)}
+                        className="w-5 h-5 accent-purple-500"
+                      />
+                      <input
+                        type="text"
+                        value={task}
+                        onChange={(e) =>
+                          handleTaskChange(index, e.target.value)
+                        }
+                        className="mt-1 block w-full border border-gray-300 rounded p-2"
+                        placeholder={`Tugas ${index + 1}`}
+                      />
+                      {selectedTasks.includes(index) && (
+                        <div className="flex space-x-2">
+                          <button
+                            className={`px-4 py-2 rounded-lg font-semibold transition ${
+                              taskAnswers[task] === "yes"
+                                ? "bg-purple-500 text-white"
+                                : "bg-gray-300 text-gray-700"
+                            }`}
+                            onClick={() => handleTaskAnswer(task, "yes")}
+                          >
+                            Yes
+                          </button>
+                          <button
+                            className={`px-4 py-2 rounded-lg font-semibold transition ${
+                              taskAnswers[task] === "no"
+                                ? "bg-purple-500 text-white"
+                                : "bg-gray-300 text-gray-700"
+                            }`}
+                            onClick={() => handleTaskAnswer(task, "no")}
+                          >
+                            No
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  <button
+                    onClick={addTask}
+                    className="mt-2 bg-purple-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  >
+                    + Tambah Tugas
+                  </button>
+                </div>
                 <div className="space-y-4">
                   <label className="block text-sm font-semibold">
                     Tanda Tangan
@@ -464,6 +476,7 @@ const Report = ({ isSidebarOpen }) => {
                 </div>
               </div>
             </div>
+          </div>
         );
 
       case "Preview":
