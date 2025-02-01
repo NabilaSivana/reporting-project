@@ -4,10 +4,11 @@ const Header = ({ isSidebarOpen, toggleSidebar }) => {
   return (
     <header
       className={`bg-white shadow-md p-6 flex justify-between items-center fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isSidebarOpen ? "ml-64" : "ml-20"
+        isSidebarOpen ? "md:ml-64" : "md:ml-20"
       }`}
     >
       <div className="flex items-center space-x-4">
+        {/* Tombol ☰ tetap ada di semua ukuran */}
         <button
           onClick={toggleSidebar}
           className="text-purple-600 focus:outline-none"
@@ -24,7 +25,7 @@ const Header = ({ isSidebarOpen, toggleSidebar }) => {
           </span>
         </div>
         <div className="flex items-center space-x-2">
-          <span className="font-semibold">Admin</span>
+          <span className="font-semibold">Engineer</span>
           <div className="bg-yellow-300 w-8 h-8 rounded-full"></div>
         </div>
       </div>
