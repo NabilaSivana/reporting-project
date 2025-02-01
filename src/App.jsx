@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./landing/Dashboard";
 import Todo from "./landing/ToDo";
@@ -6,10 +6,9 @@ import Report from "./landing/Report";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/HeaderTemp";
 
-// Layout untuk halaman utama dengan Sidebar dan Header
 const MainLayout = ({ children }) => {
   const [activePage, setActivePage] = useState("Dashboard");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Default sidebar tertutup
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -21,10 +20,11 @@ const MainLayout = ({ children }) => {
         activePage={activePage}
         setActivePage={setActivePage}
         isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
       />
       <div
         className={`flex-1 transition-all duration-300 ${
-          isSidebarOpen ? "ml-64" : "ml-20"
+          isSidebarOpen ? "ml-64" : "ml-0 md:ml-20"
         }`}
       >
         <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
@@ -40,8 +40,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<LoginForm />} /> */}
-
         <Route
           path="/"
           element={
