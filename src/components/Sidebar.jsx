@@ -35,7 +35,7 @@ const Sidebar = ({
       {/* Sidebar Container */}
       <div
         className={`fixed top-0 left-0 h-full bg-white shadow-md z-50 transition-all duration-300
-          ${isSidebarOpen ? "w-64" : "w-0 md:w-20"} 
+          ${isSidebarOpen ? "w-64" : "hidden md:w-20"} 
           ${
             isSidebarOpen
               ? "translate-x-0"
