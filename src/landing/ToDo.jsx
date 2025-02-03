@@ -7,8 +7,8 @@ const Todo = ({ isSidebarOpen, todoList }) => {
   return (
     <div
       className={`transition-all duration-300 p-6 mt-20 ${
-        isSidebarOpen ? "ml-5" : "ml-5"
-      } max-w-full`}
+        isSidebarOpen ? "ml-64" : "ml-20"
+      }`}
     >
       <h2 className="font-semibold text-lg mb-4">ToDo List</h2>
       <input
@@ -16,22 +16,20 @@ const Todo = ({ isSidebarOpen, todoList }) => {
         placeholder="Search"
       />
 
-      {todoList.length === 0 ? (
+      {todoList && todoList.length === 0 ? (
         <p className="text-gray-500">Tidak ada tugas saat ini.</p>
       ) : (
-        todoList.map((task, index) => (
+        todoList?.map((task, index) => (
           <div
             key={index}
-            className="border p-4 rounded-md flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4"
+            className="border p-4 rounded-md flex justify-between items-center mb-4"
           >
-            <div className="flex-1">
-              <p className="font-bold text-base sm:text-lg">{task.name}</p>
-              <p className="text-gray-500 text-sm sm:text-base">
-                Tenggat: {task.deadline}
-              </p>
+            <div>
+              <p className="font-bold">{task.name}</p>
+              <p className="text-gray-500">Tenggat: {task.deadline}</p>
             </div>
             <button
-              className="mt-2 sm:mt-0 px-4 py-1 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition duration-200"
+              className="px-4 py-1 bg-purple-500 text-white rounded-md"
               onClick={() => navigate("/todo/report")}
             >
               Report
