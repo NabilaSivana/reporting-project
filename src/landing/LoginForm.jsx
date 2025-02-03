@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import illustration from "../assets/images/animasi-login.png";
 import { useNavigate } from "react-router-dom";
+import illustration from "../assets/images/animasi-login.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -11,25 +11,26 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+    fetch("http://localhost:3000/api/v1/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Response dari backend:", data);
+        if (data.token) {
+          localStorage.setItem("userToken", data.token);
+          console.log("Token disimpan:", data.token);
+          navigate("/dashboard"); // Redirect setelah login sukses
+        }
+      })
+      .catch((error) => console.error("Login error:", error));
 
-      if (response.ok) {
-        navigate("");
-      } else {
-        const data = await response.json();
-        setErrorMessage(data.message || "Invalid email or password");
-      }
-    } catch (error) {
-      setErrorMessage("An error occurred. Please try again later.");
-    }
   };
+
 
   return (
     <div className="flex justify-between items-center h-screen bg-[#F3F5F9] p-0">

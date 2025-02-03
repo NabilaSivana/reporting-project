@@ -6,6 +6,7 @@ import Todo from "./landing/ToDo";
 import Report from "./landing/Report";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/HeaderTemp";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Layout for the main page with Sidebar and Header
 const MainLayout = ({ children }) => {
@@ -40,27 +41,33 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <MainLayout>
-              {(isSidebarOpen) => <Dashboard isSidebarOpen={isSidebarOpen} />}
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout>
+                {(isSidebarOpen) => <Dashboard isSidebarOpen={isSidebarOpen} />}
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/todo"
           element={
-            <MainLayout>
-              {(isSidebarOpen) => <Todo isSidebarOpen={isSidebarOpen} />}
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout>
+                {(isSidebarOpen) => <Todo isSidebarOpen={isSidebarOpen} />}
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/todo/report"
           element={
-            <MainLayout>
-              {(isSidebarOpen) => <Report isSidebarOpen={isSidebarOpen} />}
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout>
+                {(isSidebarOpen) => <Report isSidebarOpen={isSidebarOpen} />}
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
       </Routes>

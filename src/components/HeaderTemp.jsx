@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = ({ isSidebarOpen, toggleSidebar }) => {
   const navigate = useNavigate();
@@ -14,16 +14,39 @@ const Header = ({ isSidebarOpen, toggleSidebar }) => {
   };
 
   // Fungsi Logout
-  const handleLogout = () => {
-    localStorage.removeItem("userToken"); // Contoh jika pakai localStorage
-    navigate("/login");
+  const handleLogout = async () => {
+    const token = localStorage.getItem("userToken");
+    console.log("Token di Header:", token); // Debugging
+    if (!token) {
+      console.warn("No token found in Header, redirecting to login...");
+      navigate("/login");
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/auth/logout", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        localStorage.removeItem("userToken");
+        navigate("/login");
+      } else {
+        console.error("Logout failed with status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
+
 
   return (
     <header
-      className={`bg-white shadow-md p-6 flex justify-between items-center fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isSidebarOpen ? "md:ml-64" : "md:ml-20"
-      }`}
+      className={`bg-white shadow-md p-6 flex justify-between items-center fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isSidebarOpen ? "md:ml-64" : "md:ml-20"
+        }`}
     >
       {/* Bagian Kiri: Menu & Nama Halaman */}
       <div className="flex items-center space-x-4">
