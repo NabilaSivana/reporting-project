@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginForm from "./landing/LoginForm";
 import Dashboard from "./landing/Dashboard";
 import Todo from "./landing/ToDo";
 import Report from "./landing/Report";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/HeaderTemp";
 
+// Layout for the main page with Sidebar and Header
 const MainLayout = ({ children }) => {
   const [activePage, setActivePage] = useState("Dashboard");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -20,13 +22,8 @@ const MainLayout = ({ children }) => {
         activePage={activePage}
         setActivePage={setActivePage}
         isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
       />
-      <div
-        className={`flex-1 transition-all duration-300 ${
-          isSidebarOpen ? "ml-64" : "ml-0 md:ml-20"
-        }`}
-      >
+      <div className="flex-1">
         <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <main className="p-6 bg-gray-100">{children(isSidebarOpen)}</main>
       </div>
@@ -35,21 +32,16 @@ const MainLayout = ({ children }) => {
 };
 
 function App() {
-  const [todoList, setTodoList] = useState([]);
-
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<LoginForm />} />
+
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <MainLayout>
-              {(isSidebarOpen) => (
-                <Dashboard
-                  isSidebarOpen={isSidebarOpen}
-                  setTodoList={setTodoList}
-                />
-              )}
+              {(isSidebarOpen) => <Dashboard isSidebarOpen={isSidebarOpen} />}
             </MainLayout>
           }
         />
@@ -58,9 +50,7 @@ function App() {
           path="/todo"
           element={
             <MainLayout>
-              {(isSidebarOpen) => (
-                <Todo isSidebarOpen={isSidebarOpen} todoList={todoList} />
-              )}
+              {(isSidebarOpen) => <Todo isSidebarOpen={isSidebarOpen} />}
             </MainLayout>
           }
         />
